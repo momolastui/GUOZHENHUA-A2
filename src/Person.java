@@ -4,21 +4,21 @@ public abstract class Person {
     private int age;
     private String address;
 
-    // Default constructor
+    // 默认构造函数
     public Person() {
         this.name = "Unknown";
         this.age = 0;
         this.address = "Unknown";
     }
 
-    // Parameterized constructor
+    // 参数化构造函数
     public Person(String name, int age, String address) {
         this.name = name;
         this.age = age;
         this.address = address;
     }
 
-    // Getters and setters
+    // Getter 和 Setter 方法
     public String getName() {
         return name;
     }
@@ -43,4 +43,3 @@ public abstract class Person {
         this.address = address;
     }
 }
-
