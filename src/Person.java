@@ -1,24 +1,24 @@
-//基类，内容由Employee 和 Visitor 继承
+// Person class - Abstract
 public abstract class Person {
     private String name;
     private int age;
-    private String address;
+    private String gender;
 
-    // 默认构造函数
+    // Default constructor
     public Person() {
         this.name = "Unknown";
         this.age = 0;
-        this.address = "Unknown";
+        this.gender = "Unknown";
     }
 
-    // 参数化构造函数
-    public Person(String name, int age, String address) {
+    // Parameterized constructor
+    public Person(String name, int age, String gender) {
         this.name = name;
         this.age = age;
-        this.address = address;
+        this.gender = gender;
     }
 
-    // Getter 和 Setter 方法
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -35,11 +35,11 @@ public abstract class Person {
         this.age = age;
     }
 
-    public String getAddress() {
-        return address;
+    public String getGender() {
+        return gender;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -1,22 +1,22 @@
 public class Employee extends Person {
     private String jobTitle;
-    private int employeeID;
+    private double salary;
 
-    // 默认构造函数
+    // Default constructor
     public Employee() {
-        super(); // 调用 Person 的构造函数
-        this.jobTitle = "未知";
-        this.employeeID = 0;
+        super();
+        this.jobTitle = "Unknown";
+        this.salary = 0.0;
     }
 
-    // 参数化构造函数
-    public Employee(String name, int age, String address, String jobTitle, int employeeID) {
-        super(name, age, address); // 调用 Person 的构造函数
+    // Parameterized constructor
+    public Employee(String name, int age, String gender, String jobTitle, double salary) {
+        super(name, age, gender);
         this.jobTitle = jobTitle;
-        this.employeeID = employeeID;
+        this.salary = salary;
     }
 
-    // Getter 和 Setter 方法
+    // Getters and Setters
     public String getJobTitle() {
         return jobTitle;
     }
@@ -25,12 +25,12 @@ public class Employee extends Person {
         this.jobTitle = jobTitle;
     }
 
-    public int getEmployeeID() {
-        return employeeID;
+    public double getSalary() {
+        return salary;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }
 
