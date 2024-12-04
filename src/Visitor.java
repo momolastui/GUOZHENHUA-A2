@@ -1,28 +1,28 @@
 public class Visitor extends Person {
-    private String ticketType;
+    private String visitorType;
     private String visitDate;
 
     // Default constructor
     public Visitor() {
-        super();
-        this.ticketType = "General";
+        super();  // Call Person's constructor
+        this.visitorType = "Regular";
         this.visitDate = "Unknown";
     }
 
     // Parameterized constructor
-    public Visitor(String name, int age, String gender, String ticketType, String visitDate) {
-        super(name, age, gender);
-        this.ticketType = ticketType;
+    public Visitor(String name, int age, String gender, String visitorType, String visitDate) {
+        super(name, age, gender);  // Call Person's constructor
+        this.visitorType = visitorType;
         this.visitDate = visitDate;
     }
 
-    // Getters and Setters
-    public String getTicketType() {
-        return ticketType;
+    // Getters and setters
+    public String getVisitorType() {
+        return visitorType;
     }
 
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
+    public void setVisitorType(String visitorType) {
+        this.visitorType = visitorType;
     }
 
     public String getVisitDate() {
@@ -33,3 +33,4 @@ public class Visitor extends Person {
         this.visitDate = visitDate;
     }
 }
+

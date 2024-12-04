@@ -1,3 +1,5 @@
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -5,16 +7,16 @@ public class Ride implements RideInterface {
     private String rideName;
     private Employee rideOperator;
     private int maxRiders;
-    private Queue<Visitor> rideQueue;
-    private LinkedList<Visitor> rideHistory;
+    private Queue<Visitor> rideQueue;  // Queue for visitors waiting for the ride
+    private LinkedList<Visitor> rideHistory;  // LinkedList for visitors who have taken the ride
 
     // Default constructor
     public Ride() {
         this.rideName = "Unknown Ride";
-        this.rideOperator = null; // Default operator is null
-        this.maxRiders = 10; // Default max riders is 10
-        this.rideQueue = new LinkedList<>();
-        this.rideHistory = new LinkedList<>();
+        this.rideOperator = null;
+        this.maxRiders = 10;
+        this.rideQueue = new LinkedList<>();  // Initialize the queue
+        this.rideHistory = new LinkedList<>();  // Initialize the LinkedList for history
     }
 
     // Parameterized constructor
@@ -22,16 +24,16 @@ public class Ride implements RideInterface {
         this.rideName = rideName;
         this.rideOperator = rideOperator;
         this.maxRiders = maxRiders;
-        this.rideQueue = new LinkedList<>();
-        this.rideHistory = new LinkedList<>();
+        this.rideQueue = new LinkedList<>();  // Initialize the queue
+        this.rideHistory = new LinkedList<>();  // Initialize the LinkedList for history
     }
 
-    // Implementing the RideInterface methods
+    // Implementing RideInterface methods
 
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         rideQueue.add(visitor);
-        System.out.println(visitor.getName() + " has been added to the queue.");
+        System.out.println(visitor.getName() + " has joined the queue.");
     }
 
     @Override
@@ -45,10 +47,10 @@ public class Ride implements RideInterface {
 
     @Override
     public void printQueue() {
+        System.out.println("Visitors in the queue:");
         if (rideQueue.isEmpty()) {
             System.out.println("The queue is empty.");
         } else {
-            System.out.println("Visitors in the queue:");
             for (Visitor v : rideQueue) {
                 System.out.println(v.getName());
             }
@@ -58,57 +60,59 @@ public class Ride implements RideInterface {
     @Override
     public void runOneCycle() {
         if (rideOperator == null) {
-            System.out.println("No ride operator assigned, cannot run the ride.");
+            System.out.println("No operator assigned. Ride cannot operate.");
             return;
         }
 
         if (rideQueue.isEmpty()) {
-            System.out.println("The queue is empty, cannot run the ride.");
+            System.out.println("The queue is empty. No visitors to take on the ride.");
             return;
         }
 
         int riders = Math.min(maxRiders, rideQueue.size());
         for (int i = 0; i < riders; i++) {
-            Visitor visitor = rideQueue.poll();  // Remove from queue
-            addVisitorToHistory(visitor);        // Add to ride history
+            Visitor visitor = rideQueue.poll();
+            addVisitorToHistory(visitor);  // Add visitor to the ride history
         }
 
-        System.out.println("Ride cycle completed. " + riders + " visitors took the ride.");
+        System.out.println("The ride has completed one cycle with " + riders + " visitors.");
     }
 
     @Override
     public void addVisitorToHistory(Visitor visitor) {
-        rideHistory.add(visitor);
+        rideHistory.add(visitor);  // Add visitor to the ride history
         System.out.println(visitor.getName() + " has been added to the ride history.");
     }
 
     @Override
     public void checkVisitorFromHistory(Visitor visitor) {
         if (rideHistory.contains(visitor)) {
-            System.out.println(visitor.getName() + " has already taken the ride.");
+            System.out.println(visitor.getName() + " has already ridden this ride.");
         } else {
-            System.out.println(visitor.getName() + " has not taken the ride.");
+            System.out.println(visitor.getName() + " has not ridden this ride.");
         }
     }
 
     @Override
     public int numberOfVisitors() {
-        return rideHistory.size();
+        return rideHistory.size();  // Return the number of visitors who have taken the ride
     }
 
     @Override
     public void printRideHistory() {
+        System.out.println("Visitors who have taken the ride:");
         if (rideHistory.isEmpty()) {
             System.out.println("No visitors have taken the ride yet.");
         } else {
-            System.out.println("Visitors who have taken the ride:");
-            for (Visitor v : rideHistory) {
-                System.out.println(v.getName());
+            Iterator<Visitor> iterator = rideHistory.iterator();
+            while (iterator.hasNext()) {
+                Visitor visitor = iterator.next();
+                System.out.println(visitor.getName());
             }
         }
     }
 
-    // Getters and Setters
+    // Getter and Setter methods
     public String getRideName() {
         return rideName;
     }
@@ -131,5 +135,11 @@ public class Ride implements RideInterface {
 
     public void setMaxRiders(int maxRiders) {
         this.maxRiders = maxRiders;
+    }
+
+    // Sort the ride history
+    public void sortRideHistory() {
+        Collections.sort(rideHistory, new VisitorComparator());
+        System.out.println("The ride history has been sorted.");
     }
 }

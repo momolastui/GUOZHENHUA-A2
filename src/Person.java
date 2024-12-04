@@ -18,7 +18,7 @@ public abstract class Person {
         this.gender = gender;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public String getName() {
         return name;
     }
