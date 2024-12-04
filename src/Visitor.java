@@ -1,36 +1,35 @@
-public class Visitor extends Person {
+public class Visitor {
+    private String name;
+    private int age;
+    private String gender;
     private String visitorType;
     private String visitDate;
 
-    // Default constructor
-    public Visitor() {
-        super();  // Call Person's constructor
-        this.visitorType = "Regular";
-        this.visitDate = "Unknown";
-    }
-
-    // Parameterized constructor
     public Visitor(String name, int age, String gender, String visitorType, String visitDate) {
-        super(name, age, gender);  // Call Person's constructor
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
         this.visitorType = visitorType;
         this.visitDate = visitDate;
     }
 
-    // Getters and setters
-    public String getVisitorType() {
-        return visitorType;
+    public String getName() {
+        return name;
     }
 
-    public void setVisitorType(String visitorType) {
-        this.visitorType = visitorType;
+    public int getAge() {
+        return age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getVisitorType() {
+        return visitorType;
     }
 
     public String getVisitDate() {
         return visitDate;
     }
-
-    public void setVisitDate(String visitDate) {
-        this.visitDate = visitDate;
-    }
 }
-

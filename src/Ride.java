@@ -1,20 +1,24 @@
-import java.util.Collections;
-import java.util.Iterator;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Iterator;
 
 public class Ride implements RideInterface {
     private String rideName;
     private Employee rideOperator;
-    private int maxRiders;
-    private Queue<Visitor> rideQueue;  // Queue for visitors waiting for the ride
+    private int maxRiders;  // Max visitors per cycle
+    private int numOfCycles;  // Number of times the ride has been run
+    private Queue<Visitor> rideQueue;  // Queue of visitors waiting to take the ride
     private LinkedList<Visitor> rideHistory;  // LinkedList for visitors who have taken the ride
 
     // Default constructor
     public Ride() {
         this.rideName = "Unknown Ride";
         this.rideOperator = null;
-        this.maxRiders = 10;
+        this.maxRiders = 1;  // At least one visitor is required to run the ride
+        this.numOfCycles = 0;  // Default number of cycles is 0
         this.rideQueue = new LinkedList<>();  // Initialize the queue
         this.rideHistory = new LinkedList<>();  // Initialize the LinkedList for history
     }
@@ -24,6 +28,7 @@ public class Ride implements RideInterface {
         this.rideName = rideName;
         this.rideOperator = rideOperator;
         this.maxRiders = maxRiders;
+        this.numOfCycles = 0;  // Default number of cycles is 0
         this.rideQueue = new LinkedList<>();  // Initialize the queue
         this.rideHistory = new LinkedList<>();  // Initialize the LinkedList for history
     }
@@ -69,12 +74,15 @@ public class Ride implements RideInterface {
             return;
         }
 
+        // Determine how many visitors can take the ride in this cycle
         int riders = Math.min(maxRiders, rideQueue.size());
         for (int i = 0; i < riders; i++) {
-            Visitor visitor = rideQueue.poll();
+            Visitor visitor = rideQueue.poll();  // Remove visitor from queue
             addVisitorToHistory(visitor);  // Add visitor to the ride history
         }
 
+        // Increment the number of cycles after each cycle run
+        numOfCycles++;
         System.out.println("The ride has completed one cycle with " + riders + " visitors.");
     }
 
@@ -112,6 +120,20 @@ public class Ride implements RideInterface {
         }
     }
 
+    // Export the ride history to a file
+    public void exportRideHistory(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Visitor visitor : rideHistory) {
+                writer.write(visitor.getName() + "," + visitor.getAge() + "," + visitor.getGender() + "," +
+                        visitor.getVisitorType() + "," + visitor.getVisitDate());
+                writer.newLine();
+            }
+            System.out.println("Ride history has been successfully exported to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error while exporting ride history: " + e.getMessage());
+        }
+    }
+
     // Getter and Setter methods
     public String getRideName() {
         return rideName;
@@ -135,6 +157,14 @@ public class Ride implements RideInterface {
 
     public void setMaxRiders(int maxRiders) {
         this.maxRiders = maxRiders;
+    }
+
+    public int getNumOfCycles() {
+        return numOfCycles;
+    }
+
+    public void setNumOfCycles(int numOfCycles) {
+        this.numOfCycles = numOfCycles;
     }
 
     // Sort the ride history
