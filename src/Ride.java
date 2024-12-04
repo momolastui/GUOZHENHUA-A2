@@ -1,9 +1,5 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Iterator;
+import java.io.*;
+import java.util.*;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -33,7 +29,7 @@ public class Ride implements RideInterface {
         this.rideHistory = new LinkedList<>();  // Initialize the LinkedList for history
     }
 
-    // Implementing RideInterface methods
+    // Implementing RideInterface methods...
 
     @Override
     public void addVisitorToQueue(Visitor visitor) {
@@ -134,37 +130,31 @@ public class Ride implements RideInterface {
         }
     }
 
-    // Getter and Setter methods
-    public String getRideName() {
-        return rideName;
-    }
+    // Import the ride history from a file
+    public void importRideHistory(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 5) {
+                    String name = data[0];
+                    int age = Integer.parseInt(data[1]);
+                    String gender = data[2];
+                    String visitorType = data[3];
+                    String visitDate = data[4];
 
-    public void setRideName(String rideName) {
-        this.rideName = rideName;
-    }
-
-    public Employee getRideOperator() {
-        return rideOperator;
-    }
-
-    public void setRideOperator(Employee rideOperator) {
-        this.rideOperator = rideOperator;
-    }
-
-    public int getMaxRiders() {
-        return maxRiders;
-    }
-
-    public void setMaxRiders(int maxRiders) {
-        this.maxRiders = maxRiders;
-    }
-
-    public int getNumOfCycles() {
-        return numOfCycles;
-    }
-
-    public void setNumOfCycles(int numOfCycles) {
-        this.numOfCycles = numOfCycles;
+                    Visitor visitor = new Visitor(name, age, gender, visitorType, visitDate);
+                    rideHistory.add(visitor);  // Add the visitor to the ride history
+                    System.out.println(visitor.getName() + " has been restored to the ride history.");
+                } else {
+                    System.out.println("Invalid data format in line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error while importing ride history: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format in the data file: " + e.getMessage());
+        }
     }
 
     // Sort the ride history

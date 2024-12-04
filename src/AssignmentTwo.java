@@ -4,36 +4,25 @@ import java.util.*;
 public class AssignmentTwo {
 
     public static void main(String[] args) {
-        partSix();  // Demonstrate the exportRideHistory feature in partSix()
+        partSeven();  // Demonstrate the importRideHistory functionality in partSeven()
     }
 
-    public static void partSix() {
+    public static void partSeven() {
         // Create a new Ride object
         Ride rollerCoaster = new Ride("Roller Coaster", new Employee("Zhang San", 30, "Male", "Operator", 5000), 5);
 
-        // Create some Visitor objects
-        Visitor visitor1 = new Visitor("Li Si", 25, "Female", "VIP", "2024-12-01");
-        Visitor visitor2 = new Visitor("Wang Wu", 28, "Male", "Regular", "2024-12-02");
-        Visitor visitor3 = new Visitor("Zhao Liu", 35, "Female", "Regular", "2024-12-03");
-        Visitor visitor4 = new Visitor("Sun Qi", 40, "Male", "VIP", "2024-12-04");
-        Visitor visitor5 = new Visitor("Zhou Ba", 22, "Female", "Regular", "2024-12-05");
-
-        // Add visitors to the ride history (i.e., they have taken the ride)
-        rollerCoaster.addVisitorToHistory(visitor1);
-        rollerCoaster.addVisitorToHistory(visitor2);
-        rollerCoaster.addVisitorToHistory(visitor3);
-        rollerCoaster.addVisitorToHistory(visitor4);
-        rollerCoaster.addVisitorToHistory(visitor5);
-
-        // Export the ride history to a file
+        // Import the ride history from a file
         String filename = "rideHistory.csv";
-        rollerCoaster.exportRideHistory(filename);
+        rollerCoaster.importRideHistory(filename);
 
-        // Optionally, print the history before and after exporting (for verification)
+        // Print the number of visitors in the LinkedList
+        System.out.println("Total visitors in ride history: " + rollerCoaster.numberOfVisitors());
+
+        // Print all visitors in the LinkedList to confirm correct import
         rollerCoaster.printRideHistory();
     }
 
-    // Method to write visitor data to a file
+    // Method to write visitor data to a file (for demonstration purposes)
     public static void exportVisitorsToFile(List<Visitor> visitors, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (Visitor visitor : visitors) {
@@ -47,7 +36,7 @@ public class AssignmentTwo {
         }
     }
 
-    // Method to read visitor data from a file and restore it
+    // Method to read visitor data from a file and restore it (for demonstration purposes)
     public static List<Visitor> importVisitorsFromFile(String filename) {
         List<Visitor> visitors = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
