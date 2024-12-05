@@ -1,36 +1,48 @@
 public class Visitor extends Person {
-    private String ticketType;
-    private boolean hasRidePass;
+    private boolean isVIP;
+    private int visitorID;
 
-    // Default constructor
-    public Visitor() {
-        super();
-        this.ticketType = "General";
-        this.hasRidePass = false;
+    // Constructor
+    public Visitor(String name, int age, String address, boolean isVIP, int visitorID) {
+        super(name, age, address);
+        this.isVIP = isVIP;
+        this.visitorID = visitorID;
     }
 
-    // Constructor with parameters
-    public Visitor(String name, int age, String gender, String ticketType, boolean hasRidePass) {
-        super(name, age, gender);
-        this.ticketType = ticketType;
-        this.hasRidePass = hasRidePass;
+    // Getter and Setter methods
+    public boolean isVIP() {
+        return isVIP;
     }
 
-    // Getters and setters
-    public String getTicketType() {
-        return ticketType;
+    public void setVIP(boolean VIP) {
+        isVIP = VIP;
     }
 
-    public void setTicketType(String ticketType) {
-        this.ticketType = ticketType;
+    public int getVisitorID() {
+        return visitorID;
     }
 
-    public boolean hasRidePass() {
-        return hasRidePass;
+    public void setVisitorID(int visitorID) {
+        this.visitorID = visitorID;
     }
 
-    public void setHasRidePass(boolean hasRidePass) {
-        this.hasRidePass = hasRidePass;
+    @Override
+    public String toString() {
+        return String.format("Visitor{name='%s', age=%d, address='%s', isVIP=%b, visitorID=%d}",
+                getName(), getAge(), getAddress(), isVIP, visitorID);
+    }
+
+    // Override equals and hashCode methods for proper comparison
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Visitor visitor = (Visitor) obj;
+        return visitorID == visitor.visitorID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(visitorID);
     }
 }
-
