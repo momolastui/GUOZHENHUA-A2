@@ -1,24 +1,23 @@
-// Person class - Abstract
 public abstract class Person {
     private String name;
     private int age;
-    private String gender;
+    private String address;
 
     // Default constructor
     public Person() {
-        this.name = "Unknown";
+        this.name = "";
         this.age = 0;
-        this.gender = "Unknown";
+        this.address = "";
     }
 
     // Parameterized constructor
-    public Person(String name, int age, String gender) {
+    public Person(String name, int age, String address) {
         this.name = name;
         this.age = age;
-        this.gender = gender;
+        this.address = address;
     }
 
-    // Getters and setters
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -35,11 +34,12 @@ public abstract class Person {
         this.age = age;
     }
 
-    public String getGender() {
-        return gender;
+    public String getAddress() {
+        return address;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
+

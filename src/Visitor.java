@@ -1,35 +1,36 @@
-public class Visitor {
-    private String name;
-    private int age;
-    private String gender;
-    private String visitorType;
-    private String visitDate;
+public class Visitor extends Person {
+    private String ticketType;
+    private boolean hasRidePass;
 
-    public Visitor(String name, int age, String gender, String visitorType, String visitDate) {
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.visitorType = visitorType;
-        this.visitDate = visitDate;
+    // Default constructor
+    public Visitor() {
+        super();
+        this.ticketType = "General";
+        this.hasRidePass = false;
     }
 
-    public String getName() {
-        return name;
+    // Constructor with parameters
+    public Visitor(String name, int age, String gender, String ticketType, boolean hasRidePass) {
+        super(name, age, gender);
+        this.ticketType = ticketType;
+        this.hasRidePass = hasRidePass;
     }
 
-    public int getAge() {
-        return age;
+    // Getters and setters
+    public String getTicketType() {
+        return ticketType;
     }
 
-    public String getGender() {
-        return gender;
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
     }
 
-    public String getVisitorType() {
-        return visitorType;
+    public boolean hasRidePass() {
+        return hasRidePass;
     }
 
-    public String getVisitDate() {
-        return visitDate;
+    public void setHasRidePass(boolean hasRidePass) {
+        this.hasRidePass = hasRidePass;
     }
 }
+
