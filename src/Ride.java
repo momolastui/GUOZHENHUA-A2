@@ -29,41 +29,54 @@ public class Ride implements RideInterface {
         this.rideHistory = new LinkedList<>();
     }
 
+    // Print helper function to avoid repetitive code
+    private void printMessage(String message) {
+        System.out.println(message);
+    }
+
     @Override
     public void addVisitorToQueue(Visitor visitor) {
+        if (visitor == null) {
+            printMessage("Cannot add null visitor to the queue.");
+            return;
+        }
         if (visitorQueue.size() < maxRider) {
             visitorQueue.add(visitor);
-            System.out.println(visitor.getName() + " added to queue.");
+            printMessage(visitor.getName() + " added to queue.");
         } else {
-            System.out.println("Queue is full. Cannot add " + visitor.getName());
+            printMessage("Queue is full. Cannot add " + visitor.getName());
         }
     }
 
     @Override
     public void removeVisitorFromQueue(Visitor visitor) {
+        if (visitor == null) {
+            printMessage("Cannot remove null visitor from the queue.");
+            return;
+        }
         if (visitorQueue.remove(visitor)) {
-            System.out.println(visitor.getName() + " has been removed from the queue.");
+            printMessage(visitor.getName() + " has been removed from the queue.");
         } else {
-            System.out.println("Visitor not found in queue.");
+            printMessage("Visitor not found in queue.");
         }
     }
 
     @Override
     public void printQueue() {
         if (visitorQueue.isEmpty()) {
-            System.out.println("No visitors in the queue.");
+            printMessage("No visitors in the queue.");
             return;
         }
-        System.out.println("Visitors in the queue:");
+        printMessage("Visitors in the queue:");
         for (Visitor v : visitorQueue) {
-            System.out.println(v);
+            printMessage(v.toString());
         }
     }
 
     @Override
     public void addVisitorToHistory(Visitor visitor) {
         rideHistory.add(visitor);
-        System.out.println(visitor.getName() + " added to ride history.");
+        printMessage(visitor.getName() + " added to ride history.");
     }
 
     @Override
@@ -79,23 +92,23 @@ public class Ride implements RideInterface {
     @Override
     public void printRideHistory() {
         if (rideHistory.isEmpty()) {
-            System.out.println("No visitors have taken the ride yet.");
+            printMessage("No visitors have taken the ride yet.");
             return;
         }
-        System.out.println("Visitors in the ride history:");
+        printMessage("Visitors in the ride history:");
         for (Visitor v : rideHistory) {
-            System.out.println(v);
+            printMessage(v.toString());
         }
     }
 
     @Override
     public void runOneCycle() {
         if (operator == null) {
-            System.out.println("No ride operator assigned. Ride cannot be run.");
+            printMessage("No ride operator assigned. Ride cannot be run.");
             return;
         }
         if (visitorQueue.isEmpty()) {
-            System.out.println("No visitors in the queue. Ride cannot be run.");
+            printMessage("No visitors in the queue. Ride cannot be run.");
             return;
         }
 
@@ -107,9 +120,10 @@ public class Ride implements RideInterface {
         }
 
         numOfCycles++;
-        System.out.println("Ride cycle completed. " + count + " visitors took the ride.");
+        printMessage("Ride cycle completed. " + count + " visitors took the ride.");
     }
 
+    // Export ride history to a file
     public void exportRideHistory(String fileName) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (Visitor visitor : rideHistory) {
@@ -117,17 +131,22 @@ public class Ride implements RideInterface {
                         visitor.isVIP() + "," + visitor.getVisitorID());
                 writer.newLine();
             }
-            System.out.println("Ride history exported to " + fileName);
+            printMessage("Ride history exported to " + fileName);
         } catch (IOException e) {
-            System.out.println("Error exporting ride history: " + e.getMessage());
+            printMessage("Error exporting ride history: " + e.getMessage());
         }
     }
 
+    // Import ride history from a file
     public void importRideHistory(String fileName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
+                if (data.length != 5) {
+                    printMessage("Skipping invalid line: " + line);
+                    continue; // Skip invalid lines
+                }
                 String name = data[0];
                 int age = Integer.parseInt(data[1]);
                 String address = data[2];
@@ -137,9 +156,9 @@ public class Ride implements RideInterface {
                 Visitor visitor = new Visitor(name, age, address, isVIP, visitorID);
                 addVisitorToHistory(visitor);
             }
-            System.out.println("Ride history imported from " + fileName);
+            printMessage("Ride history imported from " + fileName);
         } catch (IOException e) {
-            System.out.println("Error importing ride history: " + e.getMessage());
+            printMessage("Error importing ride history: " + e.getMessage());
         }
     }
 
@@ -182,5 +201,13 @@ public class Ride implements RideInterface {
 
     public String getRideType() {
         return rideType;
+    }
+
+    public void setVisitorQueue(Queue<Visitor> visitorQueue) {
+        this.visitorQueue = visitorQueue;
+    }
+
+    public void setRideHistory(LinkedList<Visitor> rideHistory) {
+        this.rideHistory = rideHistory;
     }
 }
